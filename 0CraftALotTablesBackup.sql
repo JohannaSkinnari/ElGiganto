@@ -1,0 +1,65 @@
+use ElGiganto35;
+GO
+
+DROP TABLE IF EXISTS OrderProduct;
+DROP TABLE IF EXISTS [Order];
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Category;
+
+CREATE TABLE Category(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(50)
+);
+
+CREATE TABLE Product(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    CategoryId INT FOREIGN KEY REFERENCES Category(Id) NOT NULL,
+    Name VARCHAR(50),
+    Price INT,
+    Info VARCHAR(2000),
+    Popularity INT,
+    Quantity INT,
+    Reserved INT,
+    Returned INT
+);
+
+CREATE TABLE Customer(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(50) NOT NULL,
+    StreetName VARCHAR(50),
+    StreetNr VARCHAR(10),
+    ZipCode VARCHAR(10),
+    City VARCHAR(50)
+);
+
+CREATE TABLE [Order](
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    CustromerId INT FOREIGN KEY REFERENCES Customer(Id),
+    OrderNr VARCHAR(10) UNIQUE NOT NULL,
+);
+
+CREATE TABLE OrderProduct(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ProductId INT FOREIGN KEY REFERENCES Product(Id) NOT NULL,
+    OrderId INT FOREIGN KEY REFERENCES [Order](Id) NOT NULL
+);
+
+CREATE TABLE Cart(
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ProductId INT FOREIGN KEY REFERENCES Product(Id),
+    Quantity INT
+);
+
+
+-- CREATE TABLE [Log](
+
+-- );
+
+
+
+
+
+
+
